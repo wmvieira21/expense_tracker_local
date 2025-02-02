@@ -12,15 +12,7 @@ class CategoriesSreeen extends StatefulWidget {
 
 class _CategoriesScreen extends State<CategoriesSreeen> {
   List<Category> categoriesDummyList = [
-    Category('category1'),
-    Category('category2'),
-    Category('category3'),
-    Category('category3'),
-    Category('category3'),
-    Category('category3'),
-    Category('category3'),
-    Category('category3'),
-    Category('category3'),
+    Category(name: 'category1'),
   ];
 
   @override

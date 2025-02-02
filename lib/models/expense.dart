@@ -47,7 +47,7 @@ class Expense {
       'categoryId': categoryId,
       'payee': payee,
       'note': note,
-      'date': date.toIso8601String(),
+      'date': date.toString(),
       'tag': tag,
     };
   }

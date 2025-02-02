@@ -1,9 +1,12 @@
 import 'package:expenses_tracker_coursera/expenses.dart';
+import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
 import 'package:expenses_tracker_coursera/screens/add_expense.dart';
 import 'package:expenses_tracker_coursera/screens/categories_sreeen.dart';
 import 'package:expenses_tracker_coursera/screens/tags_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:provider/provider.dart';
 
 final ColorScheme lightColorScheme = ColorScheme.fromSeed(
     seedColor: Color.fromARGB(255, 119, 46, 179), brightness: Brightness.light);
@@ -32,18 +35,22 @@ final ThemeData themeData = ThemeData().copyWith(
     ),
   ),
 );
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initLocalStorage();
   runApp(
     SafeArea(
-      child: MaterialApp(
-        theme: themeData,
-        routes: {
-          '/': (context) => const Expenses(),
-          '/categories': (context) => const CategoriesSreeen(),
-          '/tags': (context) => const TagsScreen(),
-          '/newExpense': (context) => const AddExpense(),
-        },
+      child: ChangeNotifierProvider(
+        create: (context) => ExpenseProvider(storage: localStorage),
+        child: MaterialApp(
+          theme: themeData,
+          routes: {
+            '/': (context) => const Expenses(),
+            '/categories': (context) => const CategoriesSreeen(),
+            '/tags': (context) => const TagsScreen(),
+            '/newExpense': (context) => const AddExpense(),
+          },
+        ),
       ),
     ),
   );

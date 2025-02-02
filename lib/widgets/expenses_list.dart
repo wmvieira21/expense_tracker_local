@@ -1,5 +1,7 @@
-import 'package:expenses_tracker_coursera/models/expense.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:expenses_tracker_coursera/models/expense.dart';
+import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
 
 class ExpensesList extends StatefulWidget {
   const ExpensesList({super.key});
@@ -9,30 +11,26 @@ class ExpensesList extends StatefulWidget {
 }
 
 class _ExpensesListState extends State<ExpensesList> {
-  List<Expense> expensesDummyList = [
-    Expense(
-        amount: 11,
-        categoryId: 'categoryId',
-        payee: 'payee',
-        note: 'note',
-        date: DateTime.now(),
-        tag: 'tag'),
-    Expense(
-        amount: 1222,
-        categoryId: 'sdsd',
-        payee: 'dddd',
-        note: 'note',
-        date: DateTime.now(),
-        tag: 'tag'),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    List<Expense> expenses =
+        Provider.of<ExpenseProvider>(context, listen: false).expensesList;
+
+    if (expenses.isEmpty) {
+      return Center(
+        child: Text('No expenses found. Click on + to add expenses'),
+      );
+    }
+    return buildListview(expenses);
+  }
+
+  Widget buildListview(List<Expense> expenses) {
+    return Consumer<ExpenseProvider>(builder: (context, provider, child) {
+      return ListView.builder(
         padding: EdgeInsets.all(8),
-        itemCount: expensesDummyList.length,
+        itemCount: expenses.length,
         itemBuilder: ((context, index) {
-          Expense expense = expensesDummyList[index];
+          Expense expense = expenses[index];
           return Dismissible(
             key: ValueKey(expense),
             child: Card.outlined(
@@ -60,6 +58,8 @@ class _ExpensesListState extends State<ExpensesList> {
               ),
             ),
           );
-        }));
+        }),
+      );
+    });
   }
 }

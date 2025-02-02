@@ -4,7 +4,7 @@ class Category {
   final String id;
   final String name;
 
-  Category(this.name) : id = uuidUtils.v4();
+  Category({required this.name}) : id = uuidUtils.v4();
   Category.withId({required this.name, required this.id});
 
   factory Category.fromJson(dynamic json) {

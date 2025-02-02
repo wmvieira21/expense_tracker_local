@@ -38,6 +38,9 @@ dependencies:
   uuid: ^4.5.1
   converter: ^0.4.0
   intl: ^0.20.2
+  provider: ^6.1.2
+  collection: ^1.19.0
+  localstorage: ^5.0.0
 
 dev_dependencies:
   flutter_test:

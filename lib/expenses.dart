@@ -62,20 +62,7 @@ class _ExpensesState extends State<Expenses>
         controller: _tabController,
         children: [
           ExpensesList(),
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context)
-                  .colorScheme
-                  .onTertiaryContainer
-                  .withValues(alpha: 150),
-            ),
-            child: Center(
-              child: Text(
-                "Click + button to record expenses!",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ),
-          ),
+          ExpensesList(),
         ],
       ),
       drawer: DrawerMenu(
