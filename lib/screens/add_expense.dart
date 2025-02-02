@@ -9,24 +9,20 @@ class AddExpense extends StatefulWidget {
 
 class _AddExpenseState extends State<AddExpense> {
   final _formKey = GlobalKey<FormState>();
-
   final _amountController = TextEditingController();
   final _payeeController = TextEditingController();
   final _noteController = TextEditingController();
-  String _category = '';
+  final ScrollController _scrollController = ScrollController();
 
-  String _notNullValitador(String? value) {
-    if (value == null || value == '') {
-      return 'This field is required';
-    }
-    return '';
-  }
-
-  final List<String> categories = ['Teste1', 'Teste2'];
+  String _category = 'Teste1';
+  String _tag = 'Teste1';
+  final List<String> _categories = ['Teste1', 'Teste2'];
+  final List<String> _tags = ['Teste1', 'Teste2'];
 
   @override
   void dispose() {
     _amountController.clear();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -37,47 +33,26 @@ class _AddExpenseState extends State<AddExpense> {
         centerTitle: true,
         title: Text("New Expense"),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
           child: Column(
-            spacing: 5,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 20,
             children: [
-              TextFormField(
-                controller: _amountController,
-                validator: (value) => _notNullValitador(value),
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  errorStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.error),
-                  prefixText: '\$ ',
-                  label: Text("Amount"),
-                ),
-              ),
-              TextFormField(
-                controller: _payeeController,
-                validator: (value) => _notNullValitador(value),
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  errorStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.error),
-                  label: Text("Payee"),
-                ),
-              ),
-              TextFormField(
-                controller: _noteController,
-                validator: (value) => _notNullValitador(value),
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  errorStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.error),
-                  label: Text("Note"),
-                ),
-              ),
+              buildTextFieldForm(
+                  _amountController, 'Amount', TextInputType.number),
+              buildTextFieldForm(_payeeController, 'Payee', TextInputType.text),
+              buildTextFieldForm(_noteController, 'Notes', TextInputType.text),
               DropdownButtonFormField(
-                  items: categories
-                      .map((e) => DropdownMenuItem(child: Text(e)))
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), label: Text('Category')),
+                  items: _categories
+                      .map((category) => DropdownMenuItem(
+                            value: category,
+                            child: Text(category),
+                          ))
                       .toList(),
                   value: _category,
                   onChanged: (value) {
@@ -87,20 +62,58 @@ class _AddExpenseState extends State<AddExpense> {
                       }
                     });
                   }),
-              const Spacer(),
+              DropdownButtonFormField(
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(), label: Text('Tag')),
+                  items: _tags
+                      .map((tag) => DropdownMenuItem(
+                            value: tag,
+                            child: Text(tag),
+                          ))
+                      .toList(),
+                  value: _tag,
+                  onChanged: (value) {
+                    setState(() {
+                      if (value != null) {
+                        _tag = value.toString();
+                      }
+                    });
+                  }),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => _formKey.currentState!.validate(),
+                  onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    _formKey.currentState!.validate();
+                  },
                   child: Text(
                     'Save Expense',
-                    //style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildTextFieldForm(
+      TextEditingController controller, String label, TextInputType typeInput) {
+    return TextFormField(
+      key: ValueKey(controller),
+      controller: controller,
+      keyboardType: typeInput,
+      validator: (value) {
+        if (value == null || value == '') {
+          return 'Field required';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        errorStyle: TextStyle(color: Theme.of(context).colorScheme.error),
+        border: OutlineInputBorder(),
+        labelText: label,
       ),
     );
   }

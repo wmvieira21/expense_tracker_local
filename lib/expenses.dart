@@ -1,4 +1,5 @@
 import 'package:expenses_tracker_coursera/widgets/drawer_menu.dart';
+import 'package:expenses_tracker_coursera/widgets/expenses_list.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
@@ -60,25 +61,13 @@ class _ExpensesState extends State<Expenses>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Container(
-            decoration: BoxDecoration(
-                color: Theme.of(context)
-                    .colorScheme
-                    .tertiaryContainer
-                    .withValues(alpha: 30)),
-            child: Center(
-              child: Text(
-                "Click + button to record expenses.",
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ),
-          ),
+          ExpensesList(),
           Container(
             decoration: BoxDecoration(
               color: Theme.of(context)
                   .colorScheme
                   .onTertiaryContainer
-                  .withValues(alpha: 50),
+                  .withValues(alpha: 150),
             ),
             child: Center(
               child: Text(

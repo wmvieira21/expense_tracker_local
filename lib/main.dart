@@ -17,7 +17,8 @@ final ThemeData themeData = ThemeData().copyWith(
   textTheme: GoogleFonts.latoTextTheme().copyWith(
       bodyLarge:
           TextStyle(color: lightColorScheme.onPrimaryContainer, fontSize: 22),
-      headlineSmall: TextStyle(color: Colors.white)),
+      headlineSmall: TextStyle(color: Colors.white),
+      bodyMedium: TextStyle(color: Colors.black, fontSize: 18)),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: lightColorScheme.primary,
   ),
