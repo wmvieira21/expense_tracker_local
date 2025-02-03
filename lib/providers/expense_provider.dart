@@ -11,6 +11,10 @@ class ExpenseProvider extends ChangeNotifier {
   LocalStorage storage;
   List<Expense> _expenses = [];
 
+  List<Expense> get expensesList {
+    return _expenses;
+  }
+
   _loadExpensesLocalStorage() {
     String? expensesJson = storage.getItem('expenses');
     if (expensesJson != null) {
@@ -28,7 +32,14 @@ class ExpenseProvider extends ChangeNotifier {
       _expenses.add(expense);
       List<Map<String, dynamic>> json =
           _expenses.map((expense) => expense.toJson()).toList();
+      saveExpenses();
+    } catch (e) {
+      print('Error during JSON encoding: $e');
+    }
+  }
 
+  void saveExpenses() {
+    try {
       storage.setItem(
         'expenses',
         jsonEncode(json),
@@ -37,9 +48,5 @@ class ExpenseProvider extends ChangeNotifier {
     } catch (e) {
       print('Error during JSON encoding: $e');
     }
-  }
-
-  List<Expense> get expensesList {
-    return _expenses;
   }
 }

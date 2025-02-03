@@ -1,5 +1,7 @@
 import 'package:expenses_tracker_coursera/expenses.dart';
+import 'package:expenses_tracker_coursera/providers/category_provider.dart';
 import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
+import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
 import 'package:expenses_tracker_coursera/screens/add_expense.dart';
 import 'package:expenses_tracker_coursera/screens/categories_sreeen.dart';
 import 'package:expenses_tracker_coursera/screens/tags_screen.dart';
@@ -40,8 +42,16 @@ void main() async {
   await initLocalStorage();
   runApp(
     SafeArea(
-      child: ChangeNotifierProvider(
-        create: (context) => ExpenseProvider(storage: localStorage),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (context) => ExpenseProvider(storage: localStorage)),
+          ChangeNotifierProvider(
+              create: (context) => CategoryProvider(storage: localStorage)),
+          ChangeNotifierProvider(
+              create: (context) => TagProvider(storage: localStorage)),
+          // Adicione outros providers aqui
+        ],
         child: MaterialApp(
           theme: themeData,
           routes: {
