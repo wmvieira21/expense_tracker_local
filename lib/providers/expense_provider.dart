@@ -34,7 +34,7 @@ class ExpenseProvider extends ChangeNotifier {
           _expenses.map((expense) => expense.toJson()).toList();
       saveExpenses();
     } catch (e) {
-      print('Error during JSON encoding: $e');
+      print('addExpense - Error during JSON encoding: $e');
     }
   }
 
@@ -42,11 +42,11 @@ class ExpenseProvider extends ChangeNotifier {
     try {
       storage.setItem(
         'expenses',
-        jsonEncode(json),
+        jsonEncode(_expenses),
       );
       notifyListeners();
     } catch (e) {
-      print('Error during JSON encoding: $e');
+      print('saveExpenses - Error during JSON encoding: $e');
     }
   }
 }

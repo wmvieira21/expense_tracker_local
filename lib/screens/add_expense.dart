@@ -1,8 +1,12 @@
+import 'package:expenses_tracker_coursera/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:expenses_tracker_coursera/utils.dart';
+import 'package:expenses_tracker_coursera/models/tags.dart';
+import 'package:expenses_tracker_coursera/providers/category_provider.dart';
+import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
 import 'package:expenses_tracker_coursera/models/expense.dart';
 import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
-import 'package:expenses_tracker_coursera/utils.dart';
 
 class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
@@ -16,12 +20,7 @@ class _AddExpenseState extends State<AddExpense> {
   final _amountController = TextEditingController();
   final _payeeController = TextEditingController();
   final _noteController = TextEditingController();
-  final List<String> _categories = ['Teste1', 'Teste2'];
-  final List<String> _tags = ['Teste1', 'Teste2'];
-
   String _selectedDate = converter.format(DateTime.now());
-  String _category = 'Teste1';
-  String _tag = 'Teste1';
 
   void _showDateTimePicker() async {
     final now = DateTime.now();
@@ -40,14 +39,14 @@ class _AddExpenseState extends State<AddExpense> {
     }
   }
 
-  void _saveExpense() {
+  void _saveExpense(String cat, String tag) {
     final expense = Expense(
         amount: double.parse(_amountController.text),
-        categoryId: _category,
+        categoryId: cat,
         payee: _payeeController.text,
         note: _noteController.text,
         date: converter.parse(_selectedDate),
-        tag: _tag);
+        tag: tag);
 
     Provider.of<ExpenseProvider>(context, listen: false).addExpense(expense);
   }
@@ -62,6 +61,12 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   Widget build(BuildContext context) {
+    List<Tag> tags = Provider.of<TagProvider>(context, listen: false).tagsList;
+    List<Category> categories =
+        Provider.of<CategoryProvider>(context, listen: false).categoriesList;
+    String categoryMenuItemValue = categories[0].name;
+    String tagMenuItemValue = tags[0].name;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -80,38 +85,50 @@ class _AddExpenseState extends State<AddExpense> {
               buildTextFieldForm(_payeeController, 'Payee', TextInputType.text),
               buildTextFieldForm(_noteController, 'Notes', TextInputType.text),
               DropdownButtonFormField(
+                  validator: (value) {
+                    if (value == null || value == '') {
+                      return 'Field required';
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     label: Text('Category'),
                   ),
-                  items: _categories
+                  items: categories
                       .map((category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(category),
+                            value: category.name,
+                            child: Text(category.name),
                           ))
                       .toList(),
-                  value: _category,
+                  value: categoryMenuItemValue,
                   onChanged: (value) {
                     setState(() {
                       if (value != null) {
-                        _category = value.toString();
+                        categoryMenuItemValue = value.toString();
                       }
                     });
                   }),
               DropdownButtonFormField(
+                  validator: (value) {
+                    if (value == null || value == '') {
+                      return 'Field required';
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), label: Text('Tag')),
-                  items: _tags
+                  items: tags
                       .map((tag) => DropdownMenuItem(
-                            value: tag,
-                            child: Text(tag),
+                            value: tag.name,
+                            child: Text(tag.name),
                           ))
                       .toList(),
-                  value: _tag,
+                  value: tagMenuItemValue,
                   onChanged: (value) {
                     setState(() {
                       if (value != null) {
-                        _tag = value.toString();
+                        tagMenuItemValue = value.toString();
                       }
                     });
                   }),
@@ -127,7 +144,7 @@ class _AddExpenseState extends State<AddExpense> {
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     _formKey.currentState!.validate();
-                    _saveExpense();
+                    _saveExpense(categoryMenuItemValue, tagMenuItemValue);
                     Navigator.pop(context);
                   },
                   child: Text(

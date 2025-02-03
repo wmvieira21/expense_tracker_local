@@ -1,3 +1,7 @@
+import 'package:expenses_tracker_coursera/models/category.dart';
+import 'package:expenses_tracker_coursera/models/tags.dart';
+import 'package:expenses_tracker_coursera/providers/category_provider.dart';
+import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:expenses_tracker_coursera/models/expense.dart';
