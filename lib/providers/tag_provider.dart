@@ -27,7 +27,7 @@ class TagProvider extends ChangeNotifier {
   }
 
   LocalStorage storage;
-  List<Tag> _tags = [];
+  final List<Tag> _tags = [];
 
   List<Tag> get tagsList {
     return _tags;

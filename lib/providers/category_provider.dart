@@ -16,7 +16,7 @@ class CategoryProvider extends ChangeNotifier {
     _loadCategoriesLocalStorage();
   }
   LocalStorage storage;
-  List<Category> _categories = [];
+  final List<Category> _categories = [];
 
   List<Category> get categoriesList {
     return _categories;

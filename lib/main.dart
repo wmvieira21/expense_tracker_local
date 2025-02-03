@@ -58,7 +58,6 @@ void main() async {
             '/': (context) => const Expenses(),
             '/categories': (context) => const CategoriesSreeen(),
             '/tags': (context) => const TagsScreen(),
-            '/newExpense': (context) => const AddExpense(),
           },
         ),
       ),

@@ -24,7 +24,7 @@ class _CategoriesScreen extends State<CategoriesSreeen> {
   @override
   Widget build(BuildContext context) {
     List<Category> categories =
-        Provider.of<CategoryProvider>(context).categoriesList;
+        Provider.of<CategoryProvider>(context, listen: true).categoriesList;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

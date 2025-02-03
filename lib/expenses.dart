@@ -1,4 +1,9 @@
+import 'package:expenses_tracker_coursera/models/category.dart';
+import 'package:expenses_tracker_coursera/models/tags.dart';
+import 'package:expenses_tracker_coursera/providers/category_provider.dart';
 import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
+import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
+import 'package:expenses_tracker_coursera/screens/add_expense.dart';
 import 'package:expenses_tracker_coursera/widgets/drawer_menu.dart';
 import 'package:expenses_tracker_coursera/widgets/expenses_list.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +47,31 @@ class _ExpensesState extends State<Expenses>
   }
 
   void _addExpense() {
-    Navigator.pushNamed(context, '/newExpense');
+    List<Tag> tags = Provider.of<TagProvider>(context, listen: false).tagsList;
+    List<Category> categories =
+        Provider.of<CategoryProvider>(context, listen: false).categoriesList;
+
+    if (categories.isEmpty || tags.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 3),
+          content: Text('Tags or Categories not found.'),
+        ),
+      );
+    } else {
+      String categoryInitialValue = categories[0].name;
+      String tagInitialValue = tags[0].name;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => AddExpense(
+            categories: categories,
+            tags: tags,
+            initiaCategoryValue: categoryInitialValue,
+            initiaTagValue: tagInitialValue,
+          ),
+        ),
+      );
+    }
   }
 
   @override

@@ -23,7 +23,8 @@ class _TagbsScreen extends State<TagsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Tag> tagList = Provider.of<TagProvider>(context).tagsList;
+    List<Tag> tagList =
+        Provider.of<TagProvider>(context, listen: true).tagsList;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
