@@ -13,6 +13,8 @@ final ColorScheme lightColorScheme = ColorScheme.fromSeed(
     seedColor: Color.fromARGB(255, 119, 46, 179), brightness: Brightness.light);
 final ColorScheme darkColorScheme = ColorScheme.dark();
 
+final ThemeData darkThemeData =
+    ThemeData().copyWith(colorScheme: darkColorScheme);
 final ThemeData themeData = ThemeData().copyWith(
   colorScheme: lightColorScheme,
   appBarTheme: AppBarTheme(
@@ -53,6 +55,8 @@ void main() async {
         ],
         child: MaterialApp(
           theme: themeData,
+          darkTheme: darkThemeData,
+          themeMode: ThemeMode.system,
           routes: {
             '/': (context) => const Expenses(),
             '/categories': (context) => const CategoriesSreeen(),
