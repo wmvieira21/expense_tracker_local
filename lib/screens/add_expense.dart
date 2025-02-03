@@ -65,7 +65,6 @@ class _AddExpenseState extends State<AddExpense> {
         note: _noteController.text,
         date: converter.parse(_selectedDate),
         tag: tagValue);
-    print('saving $categoryValue $tagValue');
     Provider.of<ExpenseProvider>(context, listen: false).addExpense(expense);
   }
 

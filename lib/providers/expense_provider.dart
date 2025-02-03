@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:expenses_tracker_coursera/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
@@ -12,6 +11,9 @@ class ExpenseProvider extends ChangeNotifier {
   List<Expense> _expenses = [];
 
   List<Expense> get expensesList {
+    _expenses.sort((exp, exp1) {
+      return -exp.date.compareTo(exp1.date);
+    });
     return _expenses;
   }
 
@@ -36,6 +38,12 @@ class ExpenseProvider extends ChangeNotifier {
     } catch (e) {
       print('addExpense - Error during JSON encoding: $e');
     }
+  }
+
+  bool deleteExpense(Expense expense) {
+    bool isExpenseDeleted = _expenses.remove(expense);
+    saveExpenses();
+    return isExpenseDeleted;
   }
 
   void saveExpenses() {
