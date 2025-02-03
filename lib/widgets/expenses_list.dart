@@ -1,7 +1,3 @@
-import 'package:expenses_tracker_coursera/models/category.dart';
-import 'package:expenses_tracker_coursera/models/tags.dart';
-import 'package:expenses_tracker_coursera/providers/category_provider.dart';
-import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:expenses_tracker_coursera/models/expense.dart';
@@ -29,41 +25,39 @@ class _ExpensesListState extends State<ExpensesList> {
   }
 
   Widget buildListview(List<Expense> expenses) {
-    return Consumer<ExpenseProvider>(builder: (context, provider, child) {
-      return ListView.builder(
-        padding: EdgeInsets.all(8),
-        itemCount: expenses.length,
-        itemBuilder: ((context, index) {
-          Expense expense = expenses[index];
-          return Dismissible(
-            key: ValueKey(expense),
-            child: Card.outlined(
-              color: Theme.of(context).colorScheme.tertiaryContainer,
-              child: Container(
-                padding: EdgeInsets.all(16),
-                height: 100,
-                child: Column(spacing: 10, children: [
-                  Row(
-                    spacing: 10,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(expense.payee),
-                      Text('\$${expense.amount}'),
-                    ],
-                  ),
-                  Row(
-                    spacing: 15,
-                    children: [
-                      Text(expense.formattedDate),
-                      Text('Category: ${expense.categoryId}'),
-                    ],
-                  ),
-                ]),
-              ),
+    return ListView.builder(
+      padding: EdgeInsets.all(8),
+      itemCount: expenses.length,
+      itemBuilder: ((context, index) {
+        Expense expense = expenses[index];
+        return Dismissible(
+          key: ValueKey(expense),
+          child: Card.outlined(
+            color: Theme.of(context).colorScheme.tertiaryContainer,
+            child: Container(
+              padding: EdgeInsets.all(16),
+              height: 100,
+              child: Column(spacing: 10, children: [
+                Row(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(expense.payee),
+                    Text('\$${expense.amount}'),
+                  ],
+                ),
+                Row(
+                  spacing: 15,
+                  children: [
+                    Text(expense.formattedDate),
+                    Text('Category: ${expense.categoryId}'),
+                  ],
+                ),
+              ]),
             ),
-          );
-        }),
-      );
-    });
+          ),
+        );
+      }),
+    );
   }
 }

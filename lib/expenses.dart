@@ -1,6 +1,8 @@
+import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
 import 'package:expenses_tracker_coursera/widgets/drawer_menu.dart';
 import 'package:expenses_tracker_coursera/widgets/expenses_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -58,12 +60,16 @@ class _ExpensesState extends State<Expenses>
             style: Theme.of(context).textTheme.headlineSmall),
         //toolbarHeight: 50,
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          ExpensesList(),
-          ExpensesList(),
-        ],
+      body: Consumer<ExpenseProvider>(
+        builder: (context, value, child) {
+          return TabBarView(
+            controller: _tabController,
+            children: [
+              ExpensesList(),
+              ExpensesList(),
+            ],
+          );
+        },
       ),
       drawer: DrawerMenu(
           selectedItemDrawer: (indexTab) => _selectPageDrawer(indexTab)),
