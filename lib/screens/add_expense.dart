@@ -78,8 +78,6 @@ class _AddExpenseState extends State<AddExpense> {
 
   @override
   Widget build(BuildContext context) {
-    print('rebuild ${widget.initiaCategoryValue}');
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

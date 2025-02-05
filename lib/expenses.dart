@@ -5,6 +5,7 @@ import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
 import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
 import 'package:expenses_tracker_coursera/screens/add_expense.dart';
 import 'package:expenses_tracker_coursera/widgets/drawer_menu.dart';
+import 'package:expenses_tracker_coursera/widgets/expenses_grouped.dart';
 import 'package:expenses_tracker_coursera/widgets/expenses_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +96,7 @@ class _ExpensesState extends State<Expenses>
             controller: _tabController,
             children: [
               ExpensesList(),
-              ExpensesList(),
+              ExpensesGrouped(),
             ],
           );
         },

@@ -1,17 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:expenses_tracker_coursera/expenses.dart';
 import 'package:expenses_tracker_coursera/providers/category_provider.dart';
 import 'package:expenses_tracker_coursera/providers/expense_provider.dart';
 import 'package:expenses_tracker_coursera/providers/tag_provider.dart';
 import 'package:expenses_tracker_coursera/screens/categories_sreeen.dart';
 import 'package:expenses_tracker_coursera/screens/tags_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:localstorage/localstorage.dart';
-import 'package:provider/provider.dart';
 
 final ColorScheme lightColorScheme = ColorScheme.fromSeed(
-    seedColor: Color.fromARGB(255, 119, 46, 179), brightness: Brightness.light);
-final ColorScheme darkColorScheme = ColorScheme.dark();
+    seedColor: Color.fromARGB(172, 53, 19, 247), brightness: Brightness.light);
+final ColorScheme darkColorScheme = ColorScheme.fromSeed(
+    seedColor: Color.fromARGB(255, 108, 87, 126), brightness: Brightness.dark);
 
 final ThemeData darkThemeData =
     ThemeData().copyWith(colorScheme: darkColorScheme);
@@ -21,10 +22,14 @@ final ThemeData themeData = ThemeData().copyWith(
       backgroundColor: lightColorScheme.onPrimaryContainer,
       foregroundColor: lightColorScheme.onPrimary),
   textTheme: GoogleFonts.latoTextTheme().copyWith(
-      bodyLarge:
-          TextStyle(color: lightColorScheme.onPrimaryContainer, fontSize: 22),
-      headlineSmall: TextStyle(color: Colors.white),
-      bodyMedium: TextStyle(color: Colors.black, fontSize: 18)),
+    bodyLarge:
+        TextStyle(color: lightColorScheme.onPrimaryContainer, fontSize: 20),
+    bodyMedium:
+        TextStyle(color: lightColorScheme.onPrimaryContainer, fontSize: 18),
+    bodySmall:
+        TextStyle(color: lightColorScheme.onPrimaryContainer, fontSize: 16),
+    headlineSmall: TextStyle(color: Colors.white),
+  ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: lightColorScheme.primary,
   ),
@@ -51,7 +56,6 @@ void main() async {
               create: (context) => CategoryProvider(storage: localStorage)),
           ChangeNotifierProvider(
               create: (context) => TagProvider(storage: localStorage)),
-          // Adicione outros providers aqui
         ],
         child: MaterialApp(
           theme: themeData,
