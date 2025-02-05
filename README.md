@@ -19,3 +19,7 @@ Flutter
 Dart
 Local Storage
 Provider
+
+## Demonstration
+
+![expenses_tracker2](https://github.com/user-attachments/assets/03b1c080-9bb0-4023-96ac-e8bd32c53960)
