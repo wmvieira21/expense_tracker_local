@@ -5,3 +5,5 @@ Developed an Expense tracker app using Flutter. It features a home screen where 
 ## Technologies
 Flutter
 Dart
+Local Storage
+Provider
